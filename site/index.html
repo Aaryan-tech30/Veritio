@@ -1,0 +1,1734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Veritio — Ship products backed by evidence, not opinions.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --ink:#1d100b;
+    --muted:#6f6a65;
+    --line:#ece8e3;
+    --bg:#fdfcfa;
+    --lav:#ded7f2;
+  }
+  body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    background:#f4f3f2;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{
+    max-width:1240px;
+    margin:0 auto;
+    background:var(--bg);
+    border-left:1px solid var(--line);
+    border-right:1px solid var(--line);
+  }
+  /* ---------- NAV ---------- */
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    height:76px; padding:0 96px;
+    border-bottom:1px solid var(--line);
+    background:var(--bg);
+  }
+  .nav-left{ display:flex; align-items:center; gap:64px; }
+  .logo{
+    font-family:'Inter',sans-serif;
+    font-size:22px; font-weight:500; letter-spacing:-0.01em;
+    display:flex; align-items:center; color:#111;
+  }
+  .logo .v{
+    font-family:Georgia,'Times New Roman',serif;
+    font-style:italic; font-weight:400;
+    font-size:27px; margin-right:1px;
+    transform:skewX(-6deg);
+  }
+  .links{ display:flex; gap:32px; }
+  .links a{
+    text-decoration:none; color:#1c1c1c;
+    font-size:16.5px; font-weight:400; letter-spacing:-0.01em;
+  }
+  .nav-right{ display:flex; align-items:center; gap:20px; }
+  .gh-btn{
+    display:flex; align-items:center; gap:8px;
+    border:1px solid var(--line); background:#fff;
+    border-radius:10px; padding:10px 18px;
+    font-size:16px; font-weight:600; color:#111;
+    cursor:pointer;
+  }
+  .gh-btn svg{ width:22px; height:22px; }
+  .login{ font-size:16.5px; font-weight:500; color:#111; text-decoration:none; }
+  .try{
+    background:#090911; color:#fff; border:none;
+    border-radius:10px; padding:13px 26px;
+    font-size:16px; font-weight:500; cursor:pointer;
+    letter-spacing:-0.01em;
+  }
+  /* ---------- HERO ---------- */
+  .hero{
+    text-align:center;
+    padding:36px 96px 0;
+    background:var(--bg);
+  }
+  .pill{
+    display:inline-flex; align-items:center; gap:10px;
+    border:1px solid var(--line); background:#fff;
+    border-radius:10px; padding:5px 16px 5px 5px;
+    font-size:16.5px; color:#2b2b2b;
+    margin-bottom:30px;
+  }
+  .pill .new{
+    background:var(--lav);
+    font-size:15px; font-weight:600;
+    border-radius:6px; padding:4px 10px;
+    letter-spacing:0.01em; color:#111;
+  }
+  h1{
+    font-family:'Inter Tight','Inter',sans-serif;
+    font-weight:600;
+    font-size:clamp(44px,5.05vw,74px);
+    line-height:1.06;
+    letter-spacing:-0.035em;
+    color:var(--ink);
+    max-width:1020px;
+    margin:0 auto;
+  }
+  .sub{
+    margin:36px auto 0;
+    max-width:700px;
+    font-size:18.5px; line-height:1.62;
+    color:var(--muted); font-weight:400;
+    letter-spacing:-0.005em;
+  }
+  .cta{ display:flex; gap:12px; justify-content:center; margin-top:44px; }
+  .btn-dark{
+    display:inline-flex; align-items:center; gap:10px;
+    background:#090911; color:#fff;
+    border-radius:12px; padding:0 28px; height:56px;
+    font-size:17px; font-weight:500; border:none; cursor:pointer;
+  }
+  .btn-dark svg{ width:20px; height:20px; }
+  .btn-light{
+    display:inline-flex; align-items:center;
+    background:#fff; color:#111;
+    border:1px solid var(--line);
+    border-radius:12px; padding:0 28px; height:56px;
+    font-size:17px; font-weight:500; cursor:pointer;
+  }
+  /* ---------- TAB BAR ---------- */
+  .tabs{
+    display:grid;
+    grid-template-columns:1.05fr 1.15fr 0.85fr 0.9fr 0.85fr 0.9fr 1.05fr;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    margin-top:115px;
+    background:var(--bg);
+  }
+  .tab{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    height:76px;
+    font-size:15.5px; font-weight:400; color:#2a2422;
+    border-right:1px solid var(--line);
+    white-space:nowrap;
+    position:relative;
+    letter-spacing:-0.005em;
+    background:none; border-top:none; border-bottom:none; border-left:none;
+    font:inherit; width:100%;
+  }
+  .tab[data-screen]{ cursor:pointer; }
+  .tab[data-screen]:hover{ background:#fff; }
+  .tab:last-child{ border-right:none; }
+  .tab svg{ width:20px; height:20px; stroke:#8a8580; flex-shrink:0; }
+  .tab.active{ color:#17100c; font-weight:500; }
+  .tab.active svg{ stroke:#17100c; }
+  .tab.active::after{
+    content:''; position:absolute; left:0; right:0; bottom:-1px; height:2px;
+    background:#17100c;
+  }
+  /* ---------- DEMO PANEL (gradient + grid + mockup) ---------- */
+  .demo{
+    position:relative;
+    min-height:760px;
+    overflow:hidden;
+    padding:60px 96px 110px;
+    background:
+      linear-gradient(90deg,
+        #cfbce6 0%,
+        #d9c4de 8%,
+        #e6cbc6 20%,
+        #f0d3b8 34%,
+        #f3d8b9 46%,
+        #eed8c2 56%,
+        #dcd4dd 70%,
+        #c9c9ee 86%,
+        #c2c2f0 100%
+      );
+    cursor:none;
+  }
+  .demo, .demo *{ cursor:none !important; }
+  .demo::before{
+    content:'';
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,.5) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,.5) 1px, transparent 1px);
+    background-size:68px 68px;
+    pointer-events:none;
+  }
+  .mock-frame{
+    position:relative;
+    max-width:1084px;
+    margin:0 auto;
+    background:rgba(255,238,222,.42);
+    border:1px solid rgba(255,255,255,.6);
+    border-radius:26px;
+    padding:11px;
+    box-shadow:0 24px 70px rgba(120,90,140,.18);
+  }
+  .mock{
+    position:relative;
+    background:#fff;
+    border:1px solid #ece6f2;
+    border-radius:16px;
+    overflow:visible;
+  }
+  .mock-bar{
+    display:flex; align-items:center; justify-content:space-between;
+    background:#f3f0f6;
+    border-bottom:1px solid #ece6f2;
+    border-radius:16px 16px 0 0;
+    height:56px; padding:0 18px;
+  }
+  .mock-bar .win{
+    width:70px; height:13px; border-radius:7px; background:#e2dce9;
+  }
+  .mock-nav{ display:flex; gap:26px; font-size:14.5px; color:#a09aac; font-weight:500; }
+  .mock-nav b{ color:#8f899c; font-weight:600; position:relative; }
+  .mock-auth{ display:flex; align-items:center; gap:16px; font-size:14px; color:#a09aac; font-weight:500; }
+  .signup{
+    background:#fff; border:1px solid #e3dce9; border-radius:8px;
+    padding:6px 16px; font-size:13.5px; font-weight:600; color:#6f6a7a;
+  }
+  .mock-body{ padding:38px 70px 64px; text-align:center; position:relative; }
+  .sk{ background:#e9e5f1; border-radius:7px; margin:0 auto; }
+  .sk-1{ width:46%; height:19px; }
+  .sk-2{ width:62%; height:12px; margin-top:18px; }
+  .sk-3{ width:46%; height:12px; margin-top:10px; }
+  .mock-btns{ display:flex; gap:12px; justify-content:center; margin:28px 0 34px; }
+  .mb-dark{ width:110px; height:44px; border-radius:10px; background:#23222b; }
+  .mb-light{ width:110px; height:44px; border-radius:10px; background:#e9e5f1; }
+  .sk-4{ width:56%; height:12px; }
+  .sk-5{ width:60%; height:12px; margin-top:10px; }
+  .rec{
+    position:absolute; left:16px; bottom:16px;
+    display:flex; align-items:center; gap:7px;
+    background:#fff; border:1px solid #e8e2f0; border-radius:20px;
+    padding:7px 14px; font-size:13px; color:#6f6a7a;
+    box-shadow:0 4px 14px rgba(0,0,0,.08);
+  }
+  .rec i{ width:9px; height:9px; border-radius:50%; background:#e23b3b; display:block; }
+  .rec b{ color:#222; font-weight:700; letter-spacing:.04em; }
+  .hint{ position:absolute; top:32px; left:56%; z-index:5; }
+  .hint .cur{ width:14px; height:14px; display:block; margin-left:2px; }
+  .hint .tag{
+    display:inline-block; margin-top:2px;
+    background:#e05a4e; color:#fff;
+    font-size:12.5px; font-weight:500;
+    border-radius:8px; padding:7px 12px;
+    box-shadow:0 6px 16px rgba(224,90,78,.4);
+    white-space:nowrap;
+  }
+  .task{
+    position:absolute; right:-24px; bottom:22px;
+    width:302px; background:#fff;
+    border:1px solid #e9e3f2; border-radius:14px;
+    box-shadow:0 18px 50px rgba(80,50,120,.22);
+    padding:16px 18px 18px; text-align:left; z-index:6;
+  }
+  .task-top{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+  .task-top span{ font-size:12.5px; font-weight:700; letter-spacing:.08em; color:#6d28d9; }
+  .dots{ display:flex; gap:5px; }
+  .dots i{ width:7px; height:7px; border-radius:50%; background:#ddd6ec; display:block; }
+  .dots i.on{ background:#6d28d9; }
+  .task h3{ font-size:16.5px; font-weight:600; color:#1c1c1c; letter-spacing:-0.01em; margin-bottom:16px; }
+  .task-row{ display:flex; gap:10px; }
+  .skip{
+    border:1px solid #e3dce9; background:#fff; color:#8a8494;
+    border-radius:10px; padding:10px 20px; font-size:15px; font-weight:500;
+  }
+  .done{
+    flex:1; border:none; background:#6d28d9; color:#fff;
+    border-radius:10px; padding:10px 0; font-size:15px; font-weight:600;
+  }
+  /* screens */
+  .screen{ display:none; position:relative; z-index:1; }
+  .screen.on{ display:block; }
+  #screen-webapp{ padding-top:140px; }
+  .screen.on .rise{ animation:rise .45s ease both; }
+  @keyframes rise{ from{ opacity:0; transform:translateY(14px); } to{ opacity:1; transform:none; } }
+  /* ---------- PHONE (Website Prototype) ---------- */
+  .phone-wrap{ position:relative; max-width:302px; margin:6px auto 0; }
+  .phone-frame{
+    background:rgba(255,255,255,.6);
+    border:1px solid rgba(255,255,255,.8);
+    border-radius:52px; padding:9px;
+    box-shadow:0 24px 70px rgba(120,90,140,.22);
+  }
+  .phone{
+    background:#fff; border:1px solid #e8e2ef;
+    border-radius:44px; overflow:hidden;
+    padding:12px 15px 10px; position:relative;
+  }
+  .island{ width:92px; height:22px; background:#0b0b10; border-radius:12px; margin:0 auto 10px; }
+  .url{
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    background:#efeaf3; color:#8b8496;
+    font-size:12px; font-weight:500;
+    border-radius:18px; padding:9px 0;
+  }
+  .url svg{ width:11px; height:11px; }
+  .prow{ display:flex; justify-content:space-between; align-items:flex-start; margin-top:12px; }
+  .ptask{ font-size:11px; font-weight:600; color:#2b2b30; line-height:1.55; }
+  .prec{ display:flex; align-items:center; gap:5px; font-size:10.5px; font-weight:500; color:#a09aac; white-space:nowrap; }
+  .prec i{ width:6px; height:6px; border-radius:50%; background:#e23b3b; display:block; }
+  .pbar{ height:5px; background:#e7e2ee; border-radius:3px; margin-top:9px; overflow:hidden; }
+  .pbar i{ display:block; width:28%; height:100%; background:#6d28d9; border-radius:3px; }
+  .pstep{ font-size:10.5px; color:#a09aac; margin-top:9px; }
+  .pcart{ font-size:15px; font-weight:700; color:#17171c; margin:9px 0 12px; letter-spacing:-0.01em; }
+  .pitem{ display:flex; align-items:center; gap:10px; margin-bottom:13px; }
+  .pthumb{ width:40px; height:40px; border-radius:10px; background:#eae5f1; flex-shrink:0; }
+  .plines{ flex:1; }
+  .plines i{ display:block; height:8px; border-radius:4px; background:#eae5f1; }
+  .plines i:first-child{ width:78%; }
+  .plines i:last-child{ width:55%; margin-top:7px; }
+  .pprice{ font-size:13px; font-weight:700; color:#17171c; }
+  .prow2{ display:flex; justify-content:space-between; font-size:12px; color:#8b8496; margin-top:11px; }
+  .ptotal{
+    display:flex; justify-content:space-between; align-items:center;
+    border-top:1px solid #eee9f2; margin-top:13px; padding-top:13px;
+    font-size:12px; color:#6f6a7a;
+  }
+  .ptotal b{ font-size:15px; color:#111; }
+  .pbtn-wrap{ position:relative; margin-top:14px; }
+  .pbtn{
+    width:100%; border:none; background:#5e21e6; color:#fff;
+    border-radius:10px; padding:14px 0;
+    font-size:13.5px; font-weight:600; font-family:inherit;
+  }
+  .pbtn:active{ transform:scale(.99); }
+  .ptap{ position:absolute; right:12px; bottom:-13px; z-index:5; pointer-events:none; }
+  .ptap .cur{ width:17px; height:17px; display:block; margin:0 26px -4px auto; }
+  .ptap .tag{
+    display:inline-block; background:#e05a4e; color:#fff;
+    font-size:11px; font-weight:500; border-radius:8px; padding:6px 11px;
+    box-shadow:0 6px 16px rgba(224,90,78,.4); white-space:nowrap;
+  }
+  .homebar{ width:108px; height:5px; border-radius:3px; background:#d9d4de; margin:26px auto 4px; }
+  /* ---------- SHARED SHEET ---------- */
+  .sheet{ background:#fff; border:1px solid #ece6f2; border-radius:16px; padding:42px 48px 48px; }
+  .sheet-head{ display:flex; align-items:baseline; justify-content:space-between; }
+  .sheet-head h2{ font-size:20px; font-weight:700; color:#2a2a30; letter-spacing:-0.01em; }
+  .sheet-head span{ font-size:14px; color:#a5a0ad; }
+  .lav{ background:#f4f1f8; border:1px solid #ece7f2; border-radius:14px; }
+  /* ---------- SURVEY ---------- */
+  .segbar{ display:flex; gap:8px; margin-top:20px; }
+  .segbar i{ flex:1; height:6px; border-radius:3px; background:#e7e2ee; display:block; }
+  .segbar i.fill{ background:#ab9bf2; }
+  .qpanel{ margin-top:20px; padding:28px 28px 24px; }
+  .qtop{ display:flex; align-items:center; justify-content:space-between; }
+  .qtop b{ font-size:12px; font-weight:700; letter-spacing:.08em; color:#6d28d9; }
+  .qtype{ background:#fff; border:1px solid #e3dce9; border-radius:8px; padding:7px 13px; font-size:12.5px; font-weight:500; color:#8b8496; }
+  .qtext{ font-size:17px; font-weight:700; color:#23232a; margin:20px 0 18px; letter-spacing:-0.01em; }
+  .opt{
+    display:flex; align-items:center; gap:13px; width:100%;
+    background:#fff; border:1px solid #e5e0ec; border-radius:12px;
+    padding:15px 18px; margin-bottom:12px;
+    font-size:15.5px; color:#33333a; font-family:inherit; text-align:left;
+  }
+  .opt .radio{ width:20px; height:20px; border-radius:50%; border:2px solid #c9c2d4; flex-shrink:0; position:relative; }
+  .opt.sel{ border-color:#6d28d9; }
+  .opt.sel .radio{ border-color:#6d28d9; }
+  .opt.sel .radio::after{ content:''; position:absolute; inset:4px; border-radius:50%; background:#6d28d9; }
+  .qhint{ font-size:13.5px; color:#b3adb9; margin-top:18px; }
+  .branch{ margin-top:20px; font-size:14px; color:#a5a0ad; }
+  /* ---------- CARD SORT ---------- */
+  .tray{ margin-top:22px; padding:18px 20px 20px; }
+  .tray-label{ font-size:12px; font-weight:700; letter-spacing:.08em; color:#8b8496; }
+  .tray-label b{ color:#6d28d9; margin-left:4px; }
+  .chips{ display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; min-height:46px; }
+  .chip{
+    display:flex; align-items:center; gap:9px;
+    background:#fff; border:1px solid #e5e0ec; border-radius:10px;
+    padding:11px 17px; font-size:14.5px; font-weight:500; color:#3a3a42;
+    box-shadow:0 2px 8px rgba(80,60,120,.07); font-family:inherit;
+  }
+  .chip svg{ width:14px; height:14px; stroke:#b3adb9; }
+  .chip.dragging{ opacity:.45; }
+  .cols{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-top:14px; }
+  .col{ background:#fff; border:1.5px dashed #d9d3e2; border-radius:14px; min-height:228px; padding:16px 18px; transition:border-color .15s, background .15s; }
+  .col.over{ border-color:#6d28d9; border-style:solid; background:#faf8ff; }
+  .col-h{ display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:700; letter-spacing:.08em; }
+  .col-h i{ width:8px; height:8px; border-radius:50%; display:block; }
+  .col .drop-hint{ font-size:14px; color:#c3bccb; text-align:center; margin-top:72px; }
+  .col .chips{ margin-top:12px; }
+  .col .chips .chip{ font-size:13.5px; padding:9px 13px; }
+  .prog{ margin-top:14px; padding:20px 22px 18px; }
+  .prog-row{ display:flex; align-items:center; justify-content:space-between; }
+  .prog-row .lbl{ display:flex; align-items:center; gap:9px; font-size:14px; color:#8b8496; }
+  .prog-row .lbl i{ width:9px; height:9px; border-radius:50%; background:#c9c2d4; display:block; }
+  .prog-row b{ font-size:15px; color:#23232a; }
+  .pgtrack{ height:8px; background:#e7e2ee; border-radius:4px; margin-top:14px; overflow:hidden; }
+  .pgtrack i{ display:block; height:100%; width:0; background:#6d28d9; border-radius:4px; transition:width .3s ease; }
+  .proghint{ font-size:13.5px; color:#a5a0ad; margin-top:12px; }
+  /* ---------- TREE TEST / BANNERS ---------- */
+  .tbanner{
+    display:flex; align-items:center; justify-content:space-between;
+    background:#202027; border-radius:14px; padding:19px 24px;
+    box-shadow:0 14px 34px rgba(20,16,30,.28);
+  }
+  .tbanner h3{ font-size:16.5px; font-weight:600; color:#fff; display:flex; align-items:center; gap:11px; letter-spacing:-0.005em; }
+  .tbanner h3 i{ width:9px; height:9px; border-radius:50%; background:#6d28d9; display:block; box-shadow:0 0 0 4px rgba(109,40,217,.25); }
+  .tbanner .tm{ display:flex; align-items:center; gap:7px; background:rgba(255,255,255,.14); color:#fff; border-radius:16px; padding:7px 15px; font-size:13.5px; font-weight:500; }
+  .tbanner .tm i{ width:7px; height:7px; border-radius:50%; background:#fff; display:block; }
+  .treepanel{ margin-top:14px; padding:24px 24px 26px; }
+  .treelabel{ font-size:12.5px; font-weight:600; letter-spacing:.06em; color:#a5a0ad; }
+  .tnode{
+    display:flex; align-items:center; gap:12px; width:100%;
+    background:#fff; border:1px solid #e5e0ec; border-radius:10px;
+    padding:15px 20px; margin-top:10px;
+    font-size:15.5px; color:#3a3a42; font-family:inherit; text-align:left;
+  }
+  .tnode svg{ width:16px; height:16px; stroke:#a5a0ad; flex-shrink:0; }
+  .tnode.plain{ padding-left:48px; }
+  /* ---------- FIRST CLICK ---------- */
+  .fcbrowser{ margin-top:14px; border:1px solid #ece7f2; border-radius:14px; overflow:hidden; background:#fff; }
+  .fcbar{ display:flex; align-items:center; justify-content:space-between; background:#f4f1f8; padding:13px 18px; }
+  .fcbar .skpill{ width:60px; height:12px; border-radius:6px; background:#d9d3e2; }
+  .fcright{ display:flex; align-items:center; gap:8px; }
+  .fcright i{ display:block; height:12px; border-radius:6px; background:#e2dce6; }
+  .fcright i:nth-child(1){ width:38px; } .fcright i:nth-child(2){ width:38px; }
+  .fcright i:nth-child(3){ width:38px; background:#ab9bf2; }
+  .fcright b{ width:26px; height:26px; border-radius:50%; background:#e2dce6; display:block; margin-left:4px; }
+  .fcbody{ padding:24px 24px 26px; }
+  .fcbar-big{ width:35%; height:16px; border-radius:8px; background:#cfc9d8; }
+  .fcpanel{ position:relative; background:#f4f1f8; border-radius:12px; margin-top:18px; padding:26px 26px 24px; min-height:196px; }
+  .fcline{ height:12px; border-radius:6px; background:#e2dce6; }
+  .fctag{ position:absolute; top:22px; right:24px; background:#ece8f0; color:#8b8496; font-size:12.5px; font-weight:500; border-radius:12px; padding:6px 14px; }
+  .fcbottom{ display:flex; align-items:flex-end; justify-content:space-between; margin-top:44px; }
+  .fcbottom .fcline{ width:26%; }
+  .fcdesign{ background:#8b8496; color:#fff; border:none; border-radius:20px; padding:11px 22px; font-size:14px; font-weight:500; font-family:inherit; }
+  .fcup{ background:#5e21e6; color:#fff; border:none; border-radius:10px; padding:13px 26px; font-size:15px; font-weight:600; font-family:inherit; }
+  .fcup:active{ transform:scale(.98); }
+  /* ---------- FIRST IMPRESSION ---------- */
+  .imp-sheet{ background:#fff; border:1px solid #ece6f2; border-radius:16px; padding:88px 40px 96px; }
+  .imp-browser{ position:relative; max-width:560px; margin:0 auto; border:1px solid #e5e0ec; border-radius:16px; overflow:hidden; background:#fff; box-shadow:0 18px 50px rgba(80,50,120,.14); }
+  .imp-url{ display:flex; align-items:center; gap:12px; background:#f4f1f8; padding:12px 16px; }
+  .imp-dots{ display:flex; gap:6px; }
+  .imp-dots i{ width:10px; height:10px; border-radius:50%; background:#d9d3e2; display:block; }
+  .imp-url span{ flex:1; background:#fff; border:1px solid #e5e0ec; border-radius:8px; text-align:center; font-size:13px; color:#a5a0ad; padding:7px 0; }
+  .imp-blur{ filter:blur(7px); user-select:none; pointer-events:none; padding:26px 30px 34px; }
+  .imp-modal{
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+    width:78%; background:#fff; border:1px solid #e9e3f2; border-radius:18px;
+    box-shadow:0 24px 70px rgba(60,35,110,.28);
+    text-align:center; padding:34px 34px 32px; z-index:2;
+  }
+  .imp-modal b{ font-size:14px; font-weight:700; letter-spacing:.1em; color:#5e21e6; }
+  .imp-modal p{ font-size:15.5px; line-height:1.6; color:#6f6a7a; margin:14px 0 22px; }
+  .imp-modal button{ background:#5e21e6; color:#fff; border:none; border-radius:12px; padding:14px 34px; font-size:16px; font-weight:600; font-family:inherit; }
+  .imp-modal button:active{ transform:scale(.98); }
+  /* ---------- RULED BANDS + WHY SECTION ---------- */
+  .rules{
+    height:62px;
+    background:repeating-linear-gradient(90deg, #e3ded8 0 1px, transparent 1px 7px);
+    opacity:.8;
+  }
+  .why{ padding:66px 96px 72px; background:var(--bg); }
+  .eyebrow{
+    display:flex; align-items:center; gap:9px;
+    font-size:15px; font-weight:700; color:#1c1c1c;
+  }
+  .eyebrow svg{ width:19px; height:19px; }
+  .stmt{
+    max-width:900px; margin-top:26px;
+    font-family:'Inter Tight','Inter',sans-serif;
+    font-size:clamp(24px,2vw,31px);
+    line-height:1.42; font-weight:500;
+    letter-spacing:-0.015em; color:var(--ink);
+  }
+  .stmt.armed span{ color:#d9d4ce; transition:color .25s linear; }
+  .stmt.armed span.lit{ color:var(--ink); }
+  .divider{ border:none; border-top:1px solid var(--line); margin:0 96px; }
+  .next{ padding:56px 96px 24px; background:var(--bg); }
+  .who{ padding:10px 96px 100px; background:var(--bg); }
+  .who-head{ display:grid; grid-template-columns:1.15fr .85fr; gap:60px; align-items:end; margin-top:34px; }
+  .who-head h2{
+    font-family:'Inter Tight','Inter',sans-serif;
+    font-size:clamp(36px,3.6vw,54px); font-weight:600;
+    line-height:1.1; letter-spacing:-0.035em; color:var(--ink);
+  }
+  .who-head p{ font-size:17px; line-height:1.62; color:var(--muted); max-width:400px; }
+  .who-grid{ display:grid; grid-template-columns:1.05fr .95fr; gap:80px; margin-top:52px; align-items:start; }
+  .role{ border-top:1px solid var(--line); }
+  .role:last-child{ border-bottom:1px solid var(--line); }
+  .role-name{
+    display:flex; align-items:center; gap:11px; width:100%;
+    background:none; border:none; font:inherit;
+    font-size:17px; color:#a5a0ad; text-align:left;
+    padding:21px 0;
+  }
+  .role-name i{ width:11px; height:11px; border-radius:50%; background:var(--dot,#6d28d9); display:none; flex-shrink:0; }
+  .role.on .role-name{ color:var(--ink); font-weight:600; }
+  .role.on .role-name i{ display:block; }
+  .role-body{ display:none; padding:2px 0 24px; }
+  .role.on .role-body{ display:block; animation:rise .4s ease both; }
+  .role-body h3{ font-size:20px; font-weight:700; color:#23232a; letter-spacing:-0.01em; }
+  .role-body p{ font-size:15px; line-height:1.65; color:var(--muted); margin-top:10px; max-width:460px; }
+  .timer{ height:3px; width:170px; background:#f0ebf3; border-radius:2px; margin-top:18px; overflow:hidden; }
+  .timer i{ display:block; height:100%; width:0; background:linear-gradient(90deg,#7c3aed,#4f46e5,#f59e0b,#ef4444); border-radius:2px; }
+  .who-panel{
+    border-radius:20px; min-height:580px;
+    display:flex; align-items:center; justify-content:center;
+    padding:48px 24px;
+    background:linear-gradient(90deg,#cfbce6 0%,#d9c4de 8%,#e6cbc6 20%,#f0d3b8 34%,#f3d8b9 46%,#eed8c2 56%,#dcd4dd 70%,#c9c9ee 86%,#c2c2f0 100%);
+  }
+  .who-card{
+    width:min(320px,82%); background:#fff; border-radius:16px;
+    box-shadow:0 18px 50px rgba(80,50,120,.20);
+    padding:24px 24px 22px;
+  }
+  .who-card.swap{ animation:cardIn .45s ease both; }
+  @keyframes cardIn{ from{ opacity:0; transform:translateY(12px) scale(.98); } to{ opacity:1; transform:none; } }
+  .wc-sub{ font-size:12px; color:#8b8496; }
+  .wc-title{ font-size:15px; font-weight:700; color:#1c1c1c; margin-top:6px; letter-spacing:-0.005em; }
+  .wc-box{
+    display:flex; align-items:center; justify-content:space-between;
+    border:1px solid #e9e3f2; border-radius:10px;
+    padding:13px 16px; margin-top:12px;
+  }
+  .wc-box.hot{ background:#f4f1f8; }
+  .wc-box b{ display:block; font-size:13.5px; color:#1c1c1c; }
+  .wc-box span{ display:block; font-size:12px; color:#8b8496; margin-top:3px; }
+  .wc-box em{ font-style:normal; font-size:17px; font-weight:700; color:#1c1c1c; }
+  .wc-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .wc-row .wc-title{ margin-top:0; }
+  .pill-green{ background:#e6f9ec; color:#1ca34f; font-size:11.5px; font-weight:600; border-radius:12px; padding:5px 12px; white-space:nowrap; }
+  .pill-ai{ background:#efe9fb; color:#6d28d9; font-size:11.5px; font-weight:600; border-radius:12px; padding:5px 12px; white-space:nowrap; }
+  .wc-meter{ margin-top:18px; }
+  .wc-row2{ display:flex; justify-content:space-between; font-size:13px; color:#4a4450; }
+  .wc-row2 b{ font-weight:400; color:#8b8496; }
+  .track{ height:8px; background:#ece8ef; border-radius:4px; margin-top:8px; overflow:hidden; }
+  .track i{ display:block; height:100%; width:0; border-radius:4px; transition:width .8s ease .1s; }
+  .wc-pol{ display:flex; align-items:center; gap:14px; margin-top:16px; }
+  .wc-pol > span{ width:82px; flex-shrink:0; font-size:13px; color:#8b8496; }
+  .wc-pol > span.strong{ color:#1c1c1c; font-weight:600; }
+  .wc-pol .track{ flex:1; margin-top:0; }
+  .ring{ position:relative; width:124px; margin:6px auto 0; }
+  .ring svg{ width:124px; height:124px; transform:rotate(-90deg); display:block; }
+  .ring div{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .ring b{ font-size:30px; font-weight:700; color:#1c1c1c; }
+  .ring span{ font-size:12px; color:#8b8496; }
+  .wc-center{ text-align:center; font-size:13.5px; color:#6f6a7a; margin-top:16px; }
+  .wc-center .pill-green{ display:inline-block; margin-top:2px; }
+  @media (max-width:1000px){
+    .who-head, .who-grid{ grid-template-columns:1fr; gap:32px; }
+    .who-panel{ min-height:480px; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .who-card.swap, .role.on .role-body{ animation:none; }
+    .track i{ transition:none; }
+  }
+  .mini-pill{
+    display:inline-flex; align-items:center; gap:9px;
+    background:#fff; border:1px solid var(--line); border-radius:8px;
+    padding:9px 15px; font-size:12px; font-weight:700; letter-spacing:.06em; color:#1c1c1c;
+  }
+  .mini-pill i{ width:8px; height:8px; border-radius:2px; background:#8b7cf6; display:block; }
+  /* ---------- RULES LOOP ---------- */
+  .rules{ animation:ruleslide 8s linear infinite; }
+  @keyframes ruleslide{ to{ background-position-x:56px; } }
+  /* ---------- PICK / SPLIT SECTIONS ---------- */
+  .pick{ background:var(--bg); text-align:center; padding:72px 24px 0; }
+  .pick-pill{
+    display:inline-flex; align-items:center; gap:10px;
+    background:#fff; border:1px solid var(--line); border-radius:10px;
+    padding:13px 24px; font-size:13px; font-weight:700; letter-spacing:.14em; color:#1c1c1c;
+  }
+  .pick-pill i{ width:9px; height:9px; border-radius:2px; background:#8b7cf6; display:block; }
+  .sec-title{
+    font-family:'Inter Tight','Inter',sans-serif;
+    font-weight:600; font-size:clamp(36px,3.8vw,54px);
+    letter-spacing:-0.035em; line-height:1.12; color:var(--ink);
+    margin-top:30px;
+  }
+  .hair{ border:none; border-top:1px solid var(--line); margin:72px 0 0; }
+  .split{ display:grid; grid-template-columns:1fr 1fr; background:#fff; text-align:left; }
+  .cell-txt{ padding:100px 72px 100px 96px; }
+  .cell-txt h3{
+    font-family:'Inter Tight','Inter',sans-serif;
+    font-weight:600; font-size:clamp(32px,2.9vw,46px);
+    letter-spacing:-0.03em; line-height:1.12; color:var(--ink);
+  }
+  .cell-txt .lead{ font-size:17px; line-height:1.68; color:var(--muted); margin-top:24px; max-width:450px; }
+  .blist{ list-style:none; margin:36px 0 0; padding:0; }
+  .blist li{ display:flex; gap:14px; font-size:17px; font-weight:500; color:#23232a; margin-top:22px; line-height:1.5; }
+  .blist i{ width:10px; height:10px; border-radius:50%; background:#e8823a; flex-shrink:0; margin-top:8px; display:block; }
+  .minis{ display:grid; grid-template-columns:1fr 1fr; gap:32px; margin-top:60px; }
+  .mini .ic{ width:40px; height:40px; border-radius:11px; display:flex; align-items:center; justify-content:center; }
+  .mini .ic svg{ width:21px; height:21px; }
+  .ic-orange{ background:#fef3ec; } .ic-orange svg{ stroke:#e8823a; }
+  .ic-green{ background:#eefbf1; } .ic-green svg{ stroke:#22b07d; }
+  .mini b{ display:block; font-size:17px; font-weight:700; color:#1c1c1c; margin-top:18px; }
+  .mini span{ display:block; font-size:15px; line-height:1.62; color:var(--muted); margin-top:10px; }
+  .cell-vis{
+    position:relative; display:flex; align-items:center; justify-content:center;
+    padding:88px 48px; overflow:hidden;
+    background:linear-gradient(90deg,#f3ddc4 0%,#eed7c2 22%,#e6d5cf 45%,#d8d2dd 68%,#cfc9ec 88%,#c9c9f0 100%);
+  }
+  .cell-vis::before{
+    content:''; position:absolute; inset:0;
+    background-image:linear-gradient(to right, rgba(255,255,255,.45) 1px, transparent 1px),linear-gradient(to bottom, rgba(255,255,255,.45) 1px, transparent 1px);
+    background-size:68px 68px; pointer-events:none;
+  }
+  .vis-card{
+    position:relative; z-index:1; width:min(480px,100%);
+    background:#fff; border-radius:18px;
+    box-shadow:0 24px 70px rgba(120,90,140,.20);
+    padding:36px 36px 34px; text-align:left;
+  }
+  .ra-title{ font-size:17px; font-weight:700; color:#1c1c1c; }
+  .ra-big{ font-size:52px; font-weight:800; letter-spacing:-0.03em; color:var(--ink); margin-top:16px; }
+  .ra-big small{ font-size:15px; font-weight:400; letter-spacing:0; color:var(--muted); margin-left:8px; }
+  .ra-big small.up{ color:#22b07d; font-weight:500; }
+  .ra-stack{ display:flex; gap:6px; margin-top:24px; }
+  .ra-stack i{ height:34px; border-radius:6px; display:block; transform:scaleX(0); transform-origin:left center; transition:transform 1s cubic-bezier(.2,.7,.2,1); }
+  .in .ra-stack i{ transform:scaleX(1); }
+  .ra-legend{ list-style:none; margin:28px 0 0; padding:0; }
+  .ra-legend li{ display:flex; align-items:center; gap:12px; font-size:15px; color:#2b2b30; padding:11px 0; }
+  .ra-legend i{ width:9px; height:9px; border-radius:50%; display:block; flex-shrink:0; }
+  .ra-legend b{ margin-left:auto; font-weight:700; color:#1c1c1c; }
+  .chart{ width:100%; height:auto; display:block; margin-top:18px; }
+  .chart text{ font-size:12px; fill:#a5a0ad; font-family:'Inter',sans-serif; }
+  .chart .gridln{ stroke:#eee9f2; stroke-width:1; }
+  .chart .draw{ fill:none; stroke:#5e21e6; stroke-width:3.5; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:100; stroke-dashoffset:100; transition:stroke-dashoffset 1.8s ease .2s; }
+  .in .chart .draw{ stroke-dashoffset:0; }
+  .chart .cdot{ fill:#5e21e6; opacity:0; transition:opacity .4s ease 1.7s; }
+  .in .chart .cdot{ opacity:1; }
+  /* ---------- INTEGRATIONS ---------- */
+  .integr{ background:#fff; text-align:center; padding:110px 0 0; }
+  .integr .sec-title{ font-size:clamp(32px,3.4vw,44px); padding:0 24px; }
+  .logos{ overflow-x:auto; margin-top:72px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .logos-in{ display:grid; grid-template-columns:repeat(9,minmax(150px,1fr)); min-width:990px; }
+  .brand{ display:flex; align-items:center; justify-content:center; min-height:172px; border-left:1px solid var(--line); filter:grayscale(1); opacity:.42; transition:filter .25s ease, opacity .25s ease; }
+  .brand:first-child{ border-left:none; }
+  .brand:hover{ filter:none; opacity:1; }
+  .brand svg{ width:46px; height:46px; display:block; }
+  @media (max-width:1000px){
+    .split{ grid-template-columns:1fr; }
+    .cell-txt{ padding:64px 32px; }
+    .cell-vis{ padding:64px 24px; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .rules{ animation:none; }
+    .ra-stack i{ transform:none; transition:none; }
+    .chart .draw{ stroke-dashoffset:0; transition:none; }
+    .chart .cdot{ opacity:1; transition:none; }
+  }
+  /* ---------- EXTRA FEATURES ---------- */
+  .xf{ background:#fff; text-align:center; padding:72px 0 0; }
+  .xf .sec-title{ font-size:clamp(30px,3.4vw,42px); padding:0 24px; }
+  .xf-grid{ display:grid; grid-template-columns:repeat(4,1fr); margin-top:64px; border-top:1px solid var(--line); text-align:left; }
+  .xf-cell{
+    background:#fff; border:none; border-left:1px solid var(--line);
+    font:inherit; text-align:left; padding:40px 36px 44px; min-height:302px;
+    display:flex; flex-direction:column; transition:background .3s ease;
+  }
+  .xf-cell:nth-child(4n+1){ border-left:none; }
+  .xf-cell:nth-child(n+5){ border-top:1px solid var(--line); }
+  .xf-cell.on{ background:#eff5fe; }
+  .xf-ic{ height:26px; margin-bottom:104px; }
+  .xf-ic svg{ width:26px; height:26px; stroke:#1c1c1c; display:block; overflow:visible; }
+  .xf-ic g, .xf-ic circle.fx{ transform-box:fill-box; transform-origin:center; }
+  .xf-cell b{ font-size:15px; font-weight:700; color:#1c1c1c; display:block; }
+  .xf-cell p{ font-size:13.5px; line-height:1.62; color:#6f6a7a; margin-top:9px; }
+  .xf-ab{ grid-column:span 2; }
+  .ab-panel{ border:1px solid #ece7f2; background:#fbfafd; border-radius:12px; padding:20px 20px 18px; margin-top:22px; }
+  .xf-cell.on .tw{ animation:tw 1.6s ease-in-out infinite; }
+  @keyframes tw{ 0%,100%{ transform:scale(1) rotate(0deg); } 50%{ transform:scale(1.18) rotate(8deg); } }
+  .xf-cell.on .ln{ animation:ln 1.8s ease-in-out infinite; }
+  .xf-cell.on .ln2{ animation-delay:.15s; }
+  .xf-cell.on .ln3{ animation-delay:.3s; }
+  @keyframes ln{ 0%,100%{ transform:translateX(0); } 50%{ transform:translateX(3px); } }
+  .xf-cell.on .nd{ animation:nd 1.8s ease-in-out infinite; }
+  .xf-cell.on .nd2{ animation-delay:.25s; }
+  .xf-cell.on .nd3{ animation-delay:.5s; }
+  @keyframes nd{ 0%,100%{ opacity:1; } 50%{ opacity:.25; } }
+  .xf-cell.on .drop{ animation:drop 1.6s ease-in infinite; }
+  @keyframes drop{ 0%{ transform:translateY(-2px); opacity:0; } 25%{ opacity:1; } 70%{ opacity:1; } 100%{ transform:translateY(9px); opacity:0; } }
+  .xf-cell.on .pl{ animation:pl 1.8s ease-in-out infinite; }
+  @keyframes pl{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.22); } }
+  .xf-cell.on .gc{ animation:nd 2s ease-in-out infinite; }
+  .xf-cell.on .gc2{ animation-delay:.5s; }
+  @media (max-width:1000px){
+    .xf-grid{ grid-template-columns:1fr; }
+    .xf-cell{ border-left:none; border-top:1px solid var(--line); min-height:0; }
+    .xf-cell:first-child{ border-top:none; }
+    .xf-ab{ grid-column:span 1; }
+    .xf-ic{ margin-bottom:32px; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .xf-cell.on .tw, .xf-cell.on .ln, .xf-cell.on .nd, .xf-cell.on .drop, .xf-cell.on .pl, .xf-cell.on .gc{ animation:none; }
+  }
+  /* ---------- PRICING ---------- */
+  .price{ position:relative; background:var(--bg); text-align:center; padding:72px 96px 0; }
+  .price, .price *{ cursor:none !important; }
+  .bill{ display:flex; align-items:center; justify-content:center; gap:14px; margin-top:30px; font-size:14px; }
+  .bill span{ color:#a5a0ad; font-weight:500; }
+  .bill span.on{ color:#1c1c1c; font-weight:600; }
+  .sw{ width:46px; height:26px; border-radius:14px; background:#ddd8e0; border:none; position:relative; padding:0; transition:background .25s ease; flex-shrink:0; }
+  .sw i{ position:absolute; top:3px; left:3px; width:20px; height:20px; border-radius:50%; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,.25); display:block; transition:left .28s cubic-bezier(.3,1.35,.5,1); }
+  .price.yearly .sw{ background:#f96a1b; }
+  .price.yearly .sw i{ left:23px; }
+  .price-grid{ display:grid; grid-template-columns:1fr 1fr 1fr; margin:52px auto 0; max-width:1220px; text-align:left; }
+  .plan{ padding:48px 44px 60px; }
+  .plan + .plan{ border-left:1px solid var(--line); }
+  .plan.pro{ background:linear-gradient(115deg,#d8c6ea 0%,#e9cfc4 45%,#f3d9b8 100%); }
+  .plan-name{ font-size:16px; font-weight:700; color:#1c1c1c; display:flex; align-items:center; }
+  .early{ font-size:10.5px; font-weight:700; letter-spacing:.04em; color:#6d28d9; background:#efe9fb; border-radius:6px; padding:4px 9px; margin-left:9px; }
+  .plan-desc{ font-size:13.5px; color:#6f6a7a; margin-top:10px; }
+  .amount{ margin-top:26px; color:var(--ink); }
+  .amount .cur{ font-size:14px; font-weight:500; vertical-align:18px; margin-right:3px; }
+  .amount .num{ font-size:52px; font-weight:700; letter-spacing:-0.03em; display:inline-block; }
+  .amount .per{ font-size:13px; color:#8b8496; margin-left:4px; }
+  .num.pop{ animation:pop .22s ease; }
+  .note.pop{ animation:pop .22s ease; }
+  @keyframes pop{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:none; } }
+  .note{ font-size:12px; color:#a5a0ad; margin-top:10px; }
+  .plan-btn{
+    display:flex; align-items:center; justify-content:center; gap:9px;
+    width:100%; height:52px; border:none; border-radius:10px;
+    background:#201209; color:#fff; font-size:15px; font-weight:600; font-family:inherit;
+    margin-top:24px;
+  }
+  .plan-btn svg{ width:16px; height:16px; }
+  .plan-btn.light{ background:#fff; color:#1c1c1c; border:1px solid #e3dce9; }
+  .plan-list{ list-style:none; margin:30px 0 0; padding:0; }
+  .plan-list li{ display:flex; gap:11px; align-items:flex-start; font-size:13.5px; color:#3a3a42; margin-top:15px; line-height:1.5; }
+  .plan-list svg{ width:15px; height:15px; flex-shrink:0; margin-top:2px; }
+  .compare{ padding:38px 0 58px; }
+  .compare a{ display:inline-flex; align-items:center; gap:8px; font-size:14px; font-weight:600; color:var(--ink); text-decoration:none; }
+  .compare svg{ width:15px; height:15px; }
+  @media (max-width:900px){
+    .price-grid{ grid-template-columns:1fr; }
+    .plan + .plan{ border-left:none; border-top:1px solid var(--line); }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .num.pop, .note.pop{ animation:none; }
+    .sw i{ transition:none; }
+  }
+  /* ---------- CTA ---------- */
+  .ctaban{ position:relative; background:var(--bg); padding:140px 0 130px; }
+  .cta-panel{
+    position:relative; overflow:hidden; text-align:center; padding:125px 24px;
+    background:linear-gradient(90deg,#d6c3ec 0%,#e6cbda 22%,#f2d5b3 48%,#d5c9f0 78%,#bcbcf4 100%);
+  }
+  .cta-panel::before{
+    content:''; position:absolute; inset:0;
+    background-image:linear-gradient(to right, rgba(255,255,255,.5) 1px, transparent 1px),linear-gradient(to bottom, rgba(255,255,255,.5) 1px, transparent 1px);
+    background-size:68px 68px; pointer-events:none;
+  }
+  .cta-panel h2{
+    position:relative; z-index:1;
+    font-family:'Inter Tight','Inter',sans-serif; font-weight:600;
+    font-size:clamp(36px,4vw,50px); letter-spacing:-0.035em; line-height:1.1; color:var(--ink);
+  }
+  .cta-panel p{
+    position:relative; z-index:1;
+    max-width:660px; margin:26px auto 0;
+    font-size:19px; line-height:1.65; color:#5f5a56;
+  }
+  .cta-btn{
+    position:relative; z-index:1;
+    display:inline-flex; align-items:center; gap:12px;
+    margin-top:44px; height:56px; padding:0 44px;
+    background:#0b0b10; color:#fff; border:none; border-radius:10px;
+    font-size:17px; font-weight:500; font-family:inherit;
+  }
+  .cta-btn svg{ width:19px; height:19px; }
+  /* ---------- FOOTER ---------- */
+  .foot{ position:relative; background:#0b0b0c; }
+  .foot-in{
+    max-width:1240px; margin:0 auto; padding:72px 96px 84px;
+    border-left:1px solid rgba(255,255,255,.12);
+    border-right:1px solid rgba(255,255,255,.12);
+    display:grid; grid-template-columns:1.7fr 1fr 1fr; gap:60px;
+    border-top:1px solid rgba(255,255,255,.12);
+  }
+  .flogo{ display:flex; align-items:center; color:#fff; font-size:24px; font-weight:500; letter-spacing:-0.01em; }
+  .flogo .v{ font-family:Georgia,'Times New Roman',serif; font-style:italic; font-weight:400; font-size:29px; margin-right:1px; transform:skewX(-6deg); }
+  .ftag{ font-size:17px; line-height:1.65; color:#9a9a9e; margin-top:22px; max-width:400px; }
+  .fcol{ border-left:1px solid rgba(255,255,255,.12); padding-left:60px; }
+  .fcol h4{ font-size:16px; font-weight:500; color:#8a8a8e; }
+  .fcol ul{ list-style:none; margin:34px 0 0; padding:0; }
+  .fcol li{ margin-top:26px; }
+  .fcol li:first-child{ margin-top:0; }
+  .fcol a{ font-size:16px; color:#f0f0f2; text-decoration:none; }
+  .fbase{ border-top:1px solid rgba(255,255,255,.12); text-align:center; padding:34px 24px; font-size:15px; color:#8a8a8e; }
+  @media (max-width:900px){
+    .foot-in{ grid-template-columns:1fr; gap:48px; padding:56px 32px 64px; }
+    .fcol{ border-left:none; padding-left:0; }
+  }
+  @media (max-width:1000px){
+    .nav, .hero, .why, .who, .next, .price, .demo, .foot-in, .divider{ padding-left:24px; padding-right:24px; }
+    .divider{ margin-left:24px; margin-right:24px; }
+  }
+  /* interactive "you" cursor */
+  .you{
+    position:absolute; top:0; left:0; z-index:60;
+    display:flex; align-items:flex-start; gap:0;
+    pointer-events:none; opacity:0;
+    transition:opacity .18s ease;
+    will-change:transform;
+  }
+  .you.show{ opacity:1; }
+  .you svg{ width:26px; height:26px; display:block; filter:drop-shadow(0 3px 6px rgba(249,115,22,.45)); }
+  .you em{
+    font-style:normal; font-size:13px; font-weight:600; color:#fff;
+    background:#f96a1b; border-radius:20px; padding:4px 12px;
+    margin-left:-4px; margin-top:16px;
+    box-shadow:0 4px 12px rgba(249,106,27,.45);
+    white-space:nowrap;
+  }
+  @media (prefers-reduced-motion:reduce){
+    .you{ transition:none; }
+    .screen.on .rise{ animation:none; }
+  }
+  @media (max-width:1100px){
+    .nav{ padding:0 24px; }
+    .links{ display:none; }
+    .tabs{ grid-template-columns:repeat(4,1fr); }
+    .tab{ height:64px; font-size:14px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="nav">
+    <div class="nav-left">
+      <div class="logo"><span class="v">V</span>eritio</div>
+      <nav class="links">
+        <a href="#">Features</a>
+        <a href="#">Use cases</a>
+        <a href="#">Pricing</a>
+        <a href="#">Education</a>
+        <a href="#">FAQ</a>
+      </nav>
+    </div>
+    <div class="nav-right">
+      <button class="gh-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </button>
+      <a class="login" href="#">Log in</a>
+      <button class="try">Try For Free</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="pill"><span class="new">NEW</span> AI-Powered Study Builder</div>
+    <h1>Ship products backed by<br>evidence, not opinions.</h1>
+    <p class="sub">Test live web apps, prototypes, surveys, card sorts, and more. One platform, results in hours. No per-response fees, ever.</p>
+    <div class="cta">
+      <button class="btn-dark">Start Free
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+      <button class="btn-light">Explore Features</button>
+    </div>
+  </section>
+
+  <nav class="tabs" role="tablist" aria-label="Study types">
+    <button class="tab active" role="tab" aria-selected="true" data-screen="webapp">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.9 5.7 3.9 9S14.5 18.4 12 21c-2.5-2.6-3.9-5.7-3.9-9S9.5 5.6 12 3z"/></svg>
+      Web App Test
+    </button>
+    <button class="tab" role="tab" aria-selected="false" data-screen="proto">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8.5h18M6.5 6.2h.01M9 6.2h.01"/></svg>
+      Website Prototype
+    </button>
+    <button class="tab" role="tab" aria-selected="false" data-screen="survey">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="m8.5 12 2.5 2.5 5-5"/></svg>
+      Survey
+    </button>
+    <button class="tab" role="tab" aria-selected="false" data-screen="cardsort">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>
+      Card Sort
+    </button>
+    <button class="tab" role="tab" aria-selected="false" data-screen="treetest">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7.5 7.5 11 16M16.5 7.5 13 16M8 6h8"/></svg>
+      Tree Test
+    </button>
+    <button class="tab" role="tab" aria-selected="false" data-screen="firstclick">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7" stroke-dasharray="2.5 2.5"/><circle cx="12" cy="12" r="0.5" fill="currentColor"/></svg>
+      First-Click
+    </button>
+    <button class="tab" role="tab" aria-selected="false" data-screen="impression">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.5"/></svg>
+      First Impression
+    </button>
+  </nav>
+
+  <section class="demo" id="demo">
+    <div class="screen on" id="screen-webapp" role="tabpanel">
+    <div class="rise">
+    <div class="mock-frame">
+      <div class="mock">
+        <div class="mock-bar">
+          <div class="win"></div>
+          <div class="mock-nav"><span>Home</span><span>Features</span><b>Pricing</b></div>
+          <div class="mock-auth"><span>Log in</span><span class="signup">Sign up</span></div>
+        </div>
+        <div class="hint">
+          <svg class="cur" viewBox="0 0 16 16"><path d="M3 1.5 13 8l-6.2 1.2L4.8 15 3 1.5z" fill="#e05a4e" stroke="#fff" stroke-width="1"/></svg>
+          <span class="tag">Tap to open pricing</span>
+        </div>
+        <div class="mock-body">
+          <div class="sk sk-1"></div>
+          <div class="sk sk-2"></div>
+          <div class="sk sk-3"></div>
+          <div class="mock-btns"><div class="mb-dark"></div><div class="mb-light"></div></div>
+          <div class="sk sk-4"></div>
+          <div class="sk sk-5"></div>
+          <div class="rec"><i></i><b>REC</b> 8:45</div>
+        </div>
+        <div class="task">
+          <div class="task-top"><span>TASK 2 OF 3</span><span class="dots"><i class="on"></i><i class="on"></i><i></i></span></div>
+          <h3>Find and open the pricing page</h3>
+          <div class="task-row"><button class="skip">Skip</button><button class="done">Mark complete</button></div>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+    <div class="screen" id="screen-proto" role="tabpanel" hidden>
+    <div class="rise">
+    <div class="phone-wrap">
+      <div class="phone-frame">
+        <div class="phone">
+          <div class="island"></div>
+          <div class="url">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            preview.v0.app
+          </div>
+          <div class="prow">
+            <div class="ptask">Task - Complete<br>checkout</div>
+            <div class="prec"><i></i>REC&nbsp;<span id="recTime">0:32</span></div>
+          </div>
+          <div class="pbar"><i></i></div>
+          <div class="pstep">Cart - step 1 of 3</div>
+          <div class="pcart">Your cart</div>
+          <div class="pitem">
+            <div class="pthumb"></div>
+            <div class="plines"><i></i><i></i></div>
+            <div class="pprice">$79</div>
+          </div>
+          <div class="pitem">
+            <div class="pthumb"></div>
+            <div class="plines"><i></i><i></i></div>
+            <div class="pprice">$50</div>
+          </div>
+          <div class="prow2"><span>Subtotal</span><span>$129</span></div>
+          <div class="prow2"><span>Shipping</span><span>Free</span></div>
+          <div class="ptotal"><span>Total</span><b>$129</b></div>
+          <div class="pbtn-wrap">
+            <button class="pbtn">Continue to shipping</button>
+            <div class="ptap">
+              <svg class="cur" viewBox="0 0 26 26"><path d="M5 2.5 21.5 13l-8.3 1.6-2.6 8L5 2.5z" fill="#f96a1b" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+              <span class="tag">Tap to continue</span>
+            </div>
+          </div>
+          <div class="homebar"></div>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+    <div class="screen" id="screen-survey" role="tabpanel" hidden>
+    <div class="rise">
+    <div class="mock-frame">
+      <div class="sheet">
+        <div class="sheet-head"><h2>Post-Task Survey</h2><span>3 questions · Branching</span></div>
+        <div class="segbar"><i class="fill"></i><i></i><i></i></div>
+        <div class="lav qpanel">
+          <div class="qtop"><b>QUESTION 1 OF 3</b><span class="qtype">Single choice</span></div>
+          <div class="qtext">How easy was it to find the pricing page?</div>
+          <button class="opt"><span class="radio"></span>Very easy</button>
+          <button class="opt"><span class="radio"></span>Somewhat easy</button>
+          <button class="opt"><span class="radio"></span>Difficult</button>
+          <div class="qhint">Pick an option to see live results</div>
+        </div>
+        <div class="branch">↳&nbsp;&nbsp;"Difficult" branches to a follow-up question.</div>
+      </div>
+    </div>
+    </div>
+    </div>
+    <div class="screen" id="screen-cardsort" role="tabpanel" hidden>
+    <div class="rise">
+    <div class="mock-frame">
+      <div class="sheet">
+        <div class="sheet-head"><h2>Navigation Card Sort</h2><span>5 cards · 3 categories</span></div>
+        <div class="lav tray">
+          <div class="tray-label">UNSORTED<b id="unsortedCount">5</b></div>
+          <div class="chips" id="tray">
+            <button class="chip" draggable="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Pricing</button>
+            <button class="chip" draggable="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>API Docs</button>
+            <button class="chip" draggable="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Help Center</button>
+            <button class="chip" draggable="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Contact Us</button>
+            <button class="chip" draggable="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Blog</button>
+          </div>
+        </div>
+        <div class="cols">
+          <div class="col" data-col="products"><div class="col-h"><i style="background:#6d28d9"></i><span style="color:#6d28d9">PRODUCTS</span></div><div class="drop-hint">Drop cards</div><div class="chips"></div></div>
+          <div class="col" data-col="support"><div class="col-h"><i style="background:#22b07d"></i><span style="color:#22b07d">SUPPORT</span></div><div class="drop-hint">Drop cards</div><div class="chips"></div></div>
+          <div class="col" data-col="resources"><div class="col-h"><i style="background:#f0562b"></i><span style="color:#f0562b">RESOURCES</span></div><div class="drop-hint">Drop cards</div><div class="chips"></div></div>
+        </div>
+        <div class="lav prog">
+          <div class="prog-row"><span class="lbl"><i></i>Sorting progress</span><b id="sortedCount">0 of 5 sorted</b></div>
+          <div class="pgtrack"><i id="sortFill"></i></div>
+          <div class="proghint">Drag every card to see the analysis</div>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+    <div class="screen" id="screen-treetest" role="tabpanel" hidden>
+    <div class="rise">
+    <div class="mock-frame">
+      <div class="sheet">
+        <div class="tbanner"><h3>Where would you go to find pricing?</h3><span class="tm"><i></i><span id="treeTime">0:07</span></span></div>
+        <div class="lav treepanel">
+          <div class="treelabel">CLICK THROUGH THE MENU TO FIND IT</div>
+          <button class="tnode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>Products</button>
+          <button class="tnode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>Solutions</button>
+          <button class="tnode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>Resources</button>
+          <button class="tnode plain">About</button>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+    <div class="screen" id="screen-firstclick" role="tabpanel" hidden>
+    <div class="rise">
+    <div class="mock-frame">
+      <div class="sheet">
+        <div class="tbanner"><h3><i></i>Where would you click to upgrade your plan?</h3></div>
+        <div class="fcbrowser">
+          <div class="fcbar"><div class="skpill"></div><div class="fcright"><i></i><i></i><i></i><b></b></div></div>
+          <div class="fcbody">
+            <div class="fcbar-big"></div>
+            <div class="fcpanel">
+              <span class="fctag">Starter</span>
+              <div class="fcline" style="width:38%"></div>
+              <div class="fcline" style="width:82%; margin-top:22px"></div>
+              <div class="fcline" style="width:64%; margin-top:12px"></div>
+              <div class="fcbottom">
+                <div class="fcline"></div>
+                <button class="fcdesign">Click the design</button>
+                <button class="fcup">Upgrade plan</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+    <div class="screen" id="screen-impression" role="tabpanel" hidden>
+    <div class="rise">
+    <div class="mock-frame">
+      <div class="imp-sheet">
+        <div class="imp-browser">
+          <div class="imp-url"><span class="imp-dots"><i></i><i></i><i></i></span><span>yoursite.com</span></div>
+          <div class="imp-blur">
+            <div class="fcline" style="width:22%; background:#ab9bf2"></div>
+            <div class="fcline" style="width:45%; margin-top:16px; background:#cfc9d8"></div>
+            <div class="fcline" style="width:70%; margin-top:26px"></div>
+            <div class="fcline" style="width:60%; margin-top:12px"></div>
+            <div class="fcline" style="width:30%; margin-top:26px"></div>
+          </div>
+          <div class="imp-modal">
+            <b>3-SECOND TEST</b>
+            <p>Study the design for 3 seconds, then tell us your first impression.</p>
+            <button>Start the test</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+    <div class="you" id="youCursor" aria-hidden="true">
+      <svg viewBox="0 0 26 26"><path d="M5 2.5 21.5 13l-8.3 1.6-2.6 8L5 2.5z" fill="#f96a1b" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+      <em>you</em>
+    </div>
+  </section>
+
+  <div class="rules" aria-hidden="true"></div>
+
+  <section class="why">
+    <div class="eyebrow">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 5-6"/></svg>
+      Why We Built Veritio
+    </div>
+    <p class="stmt" id="stmt"><span>Most</span> <span>research</span> <span>tools</span> <span>are</span> <span>built</span> <span>for</span> <span>enterprises</span> <span>with</span> <span>big</span> <span>budgets.</span> <span>Veritio</span> <span>is</span> <span>built</span> <span>for</span> <span>everyone</span> <span>else.</span> <span>Fast,</span> <span>simple,</span> <span>and</span> <span>priced</span> <span>so</span> <span>you</span> <span>actually</span> <span>use</span> <span>it.</span></p>
+  </section>
+
+  <div class="rules" aria-hidden="true"></div>
+  <hr class="divider">
+  <section class="next">
+    <span class="mini-pill"><i></i>WHO IT'S FOR</span>
+  </section>
+  <section class="who" id="who">
+    <div class="who-head">
+      <h2>Research that fits how<br>your team already works</h2>
+      <p>Veritio is built for everyone who ships, not just specialists. Simple, powerful research tools that take you from question to insight in hours.</p>
+    </div>
+    <div class="who-grid">
+      <div class="roles" role="tablist" aria-label="Roles">
+        <div class="role on" data-role="0" style="--dot:#f0562b">
+          <button class="role-name" role="tab" aria-selected="true"><i></i>Product Managers</button>
+          <div class="role-body">
+            <h3>Ship features users actually want.</h3>
+            <p>Stop guessing what to build next. Run a quick prototype or web app test, see exactly where users drop off, and ship the version backed by evidence, not the loudest opinion in the room.</p>
+            <div class="timer"><i></i></div>
+          </div>
+        </div>
+        <div class="role" data-role="1" style="--dot:#6d28d9">
+          <button class="role-name" role="tab" aria-selected="false"><i></i>Designers</button>
+          <div class="role-body">
+            <h3>Defend designs with evidence.</h3>
+            <p>Put two designs head to head, watch real users click through them, and let built-in significance testing call the winner at 95% confidence. Walk into the review with data, not opinions.</p>
+            <div class="timer"><i></i></div>
+          </div>
+        </div>
+        <div class="role" data-role="2" style="--dot:#22b07d">
+          <button class="role-name" role="tab" aria-selected="false"><i></i>UX Researchers</button>
+          <div class="role-body">
+            <h3>Scale research without the busywork.</h3>
+            <p>Recruit, test, and analyze in one place. Veritio clusters open-ended answers into themes and drafts the summary for you, so your time goes to insight, not tagging spreadsheets.</p>
+            <div class="timer"><i></i></div>
+          </div>
+        </div>
+        <div class="role" data-role="3" style="--dot:#4059ff">
+          <button class="role-name" role="tab" aria-selected="false"><i></i>Marketers</button>
+          <div class="role-body">
+            <h3>Test messaging before you ship it.</h3>
+            <p>Validate copy, landing pages, and campaigns with real users. Run a first-impression or first-click test and know what lands before you spend the budget, no code required.</p>
+            <div class="timer"><i></i></div>
+          </div>
+        </div>
+        <div class="role" data-role="4" style="--dot:#f5b800">
+          <button class="role-name" role="tab" aria-selected="false"><i></i>Founders &amp; startups</button>
+          <div class="role-body">
+            <h3>Validate before you build.</h3>
+            <p>Talk to users without a research team or a big budget. No per-response fees and results in hours, so you can decide fast and keep moving.</p>
+            <div class="timer"><i></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="who-panel">
+        <div class="who-card" id="whoCard">
+          <div class="wc-sub">Visited by 22 of 22 participants</div>
+          <div class="wc-title">Login screen</div>
+          <div class="wc-box hot"><div><b>Hits</b><span>90% of clicks</span></div><em>28</em></div>
+          <div class="wc-box"><div><b>Misses</b><span>10% of clicks</span></div><em>4</em></div>
+          <div class="wc-box"><div><b>Time spent</b><span>Average time on screen</span></div><em>10s</em></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pick">
+    <span class="pick-pill"><i></i>WHY TEAMS PICK VERITIO</span>
+    <h2 class="sec-title">From question to decision in a day</h2>
+    <hr class="hair">
+    <div class="split">
+      <div class="cell-txt">
+        <h3>Answers in hours, not weeks</h3>
+        <p class="lead">Launch a study, drop the link in Slack, and watch responses land in real time. No agency, no recruiting lag, no waiting on a CSV export to see what is happening.</p>
+        <div class="minis">
+          <div class="mini">
+            <span class="ic ic-orange"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="6" width="16" height="14" rx="3"/><path d="M4 10.5h16M8.5 3v4M15.5 3v4"/></svg></span>
+            <b>Live results</b>
+            <span>Responses land live from participant one</span>
+          </div>
+          <div class="mini">
+            <span class="ic ic-green"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2.5-6 4 12 2.5-6H21"/></svg></span>
+            <b>No exports</b>
+            <span>Completion and drop-off rates update live</span>
+          </div>
+        </div>
+      </div>
+      <div class="cell-vis">
+        <div class="vis-card" data-reveal>
+          <div class="ra-title">Response Analytics</div>
+          <div class="ra-big"><span data-count="32.5" data-dec="1" data-suffix="%">0%</span><small>of total responses</small></div>
+          <div class="ra-stack">
+            <i style="flex:26;background:#8a7a2f;transition-delay:.05s"></i><i style="flex:22;background:#e07f3a;transition-delay:.15s"></i><i style="flex:16;background:#e9a8d3;transition-delay:.25s"></i><i style="flex:15;background:#f2d35d;transition-delay:.35s"></i><i style="flex:13;background:#9dc0f0;transition-delay:.45s"></i>
+          </div>
+          <ul class="ra-legend">
+            <li><i style="background:#e07f3a"></i>Card Sort<b>56%</b></li>
+            <li><i style="background:#cf5f2b"></i>Tree Test<b>30%</b></li>
+            <li><i style="background:#e9a8d3"></i>Survey<b>46%</b></li>
+            <li><i style="background:#f2d35d"></i>Prototype<b>21%</b></li>
+            <li><i style="background:#9dc0f0"></i>First-Click<b>12%</b></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="rules" aria-hidden="true"></div>
+
+  <section class="split">
+    <div class="cell-vis">
+      <div class="vis-card" data-reveal>
+        <div class="ra-title">Study Completion Tracking</div>
+        <div class="ra-big"><span data-count="24" data-dec="0" data-suffix="%">0%</span><small class="up">+6 points</small></div>
+        <svg class="chart" viewBox="0 0 520 232" role="img" aria-label="Completion rising from January to June">
+          <line class="gridln" x1="40" y1="60" x2="505" y2="60"/>
+          <line class="gridln" x1="40" y1="125" x2="505" y2="125"/>
+          <line class="gridln" x1="40" y1="188" x2="505" y2="188"/>
+          <text x="8" y="64">50%</text><text x="8" y="129">25%</text><text x="22" y="192">0</text>
+          <path class="draw" pathLength="100" d="M40,152 L130,142 L220,134 L310,97 L400,87 L490,62"/>
+          <circle class="cdot" cx="310" cy="97" r="6"/>
+          <text x="32" y="214">Jan</text><text x="122" y="214">Feb</text><text x="212" y="214">Mar</text><text x="302" y="214">Apr</text><text x="392" y="214">May</text><text x="482" y="214">Jun</text>
+        </svg>
+      </div>
+    </div>
+    <div class="cell-txt">
+      <h3>See exactly where users get stuck</h3>
+      <p class="lead">Drop-off charts, click maps, and navigation paths show the precise moment confusion sets in, so you fix the real problem instead of debating opinions.</p>
+      <ul class="blist">
+        <li><i></i>Pinpoint the questions and steps people abandon</li>
+        <li><i></i>Compare how different participant segments behave</li>
+        <li><i></i>Catch friction early, before you spend your recruitment budget</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="rules" aria-hidden="true"></div>
+
+  <section class="split">
+    <div class="cell-txt">
+      <h3>Skip the analysis grind</h3>
+      <p class="lead">Veritio reads every open-ended answer, clusters it into themes, and drafts the summary for you. Hours of manual tagging become a five-minute review.</p>
+      <ul class="blist">
+        <li><i></i>Open responses auto-grouped into themes</li>
+        <li><i></i>Spot patterns hiding across hundreds of answers</li>
+        <li><i></i>Editable AI summaries you stay in control of</li>
+      </ul>
+    </div>
+    <div class="cell-vis">
+      <div class="vis-card" data-reveal>
+        <div class="wc-row"><div class="wc-title" style="font-size:17px">Top Themes</div><span class="pill-ai">AI-grouped</span></div>
+        <div class="wc-sub" style="margin-top:8px">From 248 open responses</div>
+        <div class="wc-meter"><div class="wc-row2"><span>Pricing felt unclear</span><b>42%</b></div><div class="track"><i data-w="42%" style="background:#e8823a"></i></div></div>
+        <div class="wc-meter"><div class="wc-row2"><span>Navigation confusing</span><b>28%</b></div><div class="track"><i data-w="28%" style="background:#5e21e6"></i></div></div>
+        <div class="wc-meter"><div class="wc-row2"><span>Onboarding friction</span><b>18%</b></div><div class="track"><i data-w="18%" style="background:#e9a8d3"></i></div></div>
+        <div class="wc-meter"><div class="wc-row2"><span>Loved the speed</span><b>12%</b></div><div class="track"><i data-w="12%" style="background:#22b07d"></i></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="rules" aria-hidden="true"></div>
+
+  <section class="integr">
+    <span class="pick-pill"><i></i>INTEGRATIONS</span>
+    <h2 class="sec-title">Fits into your design workflow, not around it</h2>
+    <div class="logos"><div class="logos-in">
+      <div class="brand" aria-label="Figma"><svg viewBox="0 0 32 48"><path d="M16 4H9a7 7 0 0 0-7 7v7h14V4z" fill="#F24E1E"/><rect x="2" y="18" width="14" height="10" rx="5" fill="#FF7262"/><circle cx="9" cy="37" r="7" fill="#0ACF83"/><circle cx="23" cy="11" r="7" fill="#1ABCFE"/><rect x="16" y="18" width="14" height="19" rx="7" fill="#A259FF"/></svg></div>
+      <div class="brand" aria-label="Slack"><svg viewBox="0 0 48 48"><rect x="17" y="4" width="9" height="17" rx="4.5" fill="#36C5F0"/><rect x="27" y="13" width="17" height="9" rx="4.5" fill="#E01E5A"/><rect x="22" y="27" width="9" height="17" rx="4.5" fill="#ECB22E"/><rect x="4" y="26" width="17" height="9" rx="4.5" fill="#2EB67D"/></svg></div>
+      <div class="brand" aria-label="Notion"><svg viewBox="0 0 48 48"><rect x="6" y="6" width="36" height="36" rx="7" fill="#111111"/><path d="M17 33V15l14 13V15" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="brand" aria-label="Miro"><svg viewBox="0 0 48 48"><clipPath id="miroclip"><circle cx="24" cy="24" r="20"/></clipPath><circle cx="24" cy="24" r="20" fill="#050038"/><g clip-path="url(#miroclip)" stroke="#fff" stroke-width="3.5"><path d="M14 36 36 14M8 28l20-20M20 40l20-20"/></g></svg></div>
+      <div class="brand" aria-label="Framer"><svg viewBox="0 0 48 48" fill="none" stroke="#4F46E5" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 15l12 10-12 10"/><path d="M23 15l12 10-12 10"/></svg></div>
+      <div class="brand" aria-label="Asana"><svg viewBox="0 0 116 48" style="width:88px;height:40px"><circle cx="13" cy="11" r="7" fill="#F06A6A"/><circle cx="5" cy="31" r="7" fill="#F06A6A"/><circle cx="21" cy="31" r="7" fill="#F06A6A"/><text x="38" y="33" font-size="23" font-weight="600" fill="#1c1c1c" font-family="Inter,sans-serif" letter-spacing="-1">asana</text></svg></div>
+      <div class="brand" aria-label="Google Sheets"><svg viewBox="0 0 48 48"><rect x="11" y="4" width="26" height="40" rx="4" fill="#34A853"/><path d="M29 4l8 8h-8z" fill="#87CEAC"/><g stroke="#fff" stroke-width="2"><path d="M17 22h14M17 29h14M17 36h14M24 22v21"/></g></svg></div>
+      <div class="brand" aria-label="Zoom"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="21" fill="#2D8CFF"/><path d="M16 17h16l-16 14h16" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="brand" aria-label="HubSpot"><svg viewBox="0 0 48 48"><g stroke="#FF7A59" stroke-width="5" stroke-linecap="round"><circle cx="24" cy="27" r="8" fill="none"/><path d="M24 19v-9M17.5 22.5 10 18M30.5 22.5 38 18" fill="none"/></g><circle cx="24" cy="7" r="3.4" fill="#FF7A59"/><circle cx="7.5" cy="16.5" r="3.4" fill="#FF7A59"/><circle cx="40.5" cy="16.5" r="3.4" fill="#FF7A59"/></svg></div>
+    </div></div>
+  </section>
+
+  <section class="xf" id="xf">
+    <span class="pick-pill"><i></i>EXTRA FEATURES</span>
+    <h2 class="sec-title">Everything You Need to Run Research at Scale</h2>
+    <div class="xf-grid" role="list">
+      <button class="xf-cell on" role="listitem" aria-selected="true">
+        <span class="xf-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linejoin="round"><g class="tw"><path d="M12 3l1.8 6.2L20 11l-6.2 1.8L12 19l-1.8-6.2L4 11l6.2-1.8z"/></g><circle cx="18.5" cy="17.5" r="1.4" fill="#1c1c1c" stroke="none"/></svg></span>
+        <b>AI follow-up questions</b>
+        <p>Veritio asks each participant a tailored follow-up based on what they answered, digging deeper automatically</p>
+      </button>
+      <button class="xf-cell" role="listitem" aria-selected="false">
+        <span class="xf-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><g class="ln"><path d="M9 6h12"/></g><g class="ln ln2"><path d="M9 12h12"/></g><g class="ln ln3"><path d="M9 18h7"/></g><circle cx="4.5" cy="6" r="1.3" fill="#1c1c1c" stroke="none"/><circle cx="4.5" cy="12" r="1.3" fill="#1c1c1c" stroke="none"/><circle cx="4.5" cy="18" r="1.3" fill="#1c1c1c" stroke="none"/></svg></span>
+        <b>13 question types</b>
+        <p>NPS, matrix, ranking, semantic differential, constant sum, opinion scales, image choice, audio, and more</p>
+      </button>
+      <button class="xf-cell" role="listitem" aria-selected="false">
+        <span class="xf-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><circle class="nd" cx="6" cy="6" r="2.2"/><circle class="nd nd2" cx="6" cy="18" r="2.2"/><circle class="nd nd3" cx="18" cy="8" r="2.2"/><path d="M6 8.2v7.6M18 10.2c0 4.5-6 3.8-9.2 5.8"/></svg></span>
+        <b>Branching, logic and scoring</b>
+        <p>Route, skip, and score participants with 30+ logic operators and custom variables</p>
+      </button>
+      <button class="xf-cell" role="listitem" aria-selected="false">
+        <span class="xf-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16l-6.2 7.2v5.3l-3.6 2v-7.3L4 5z"/><g class="drop"><circle cx="12" cy="7" r="1.7" fill="#1c1c1c" stroke="none"/></g></svg></span>
+        <b>Screen, quota, auto-close</b>
+        <p>Qualify participants with screening questions, set response quotas, and close studies automatically at your target</p>
+      </button>
+      <button class="xf-cell xf-ab" role="listitem" aria-selected="false">
+        <b>A/B test your designs</b>
+        <p>Put designs head to head and let built-in significance testing call the winner with 95% confidence, not gut feel</p>
+        <span class="ab-panel" style="display:block">
+          <span class="wc-row"><span class="wc-title">Pricing page test</span><span class="pill-green">Winner: B · 95% confidence</span></span>
+          <span class="wc-meter" style="display:block"><span class="wc-row2"><span>Design A</span><b>38%</b></span><span class="track" style="display:block"><i data-w="38%" style="background:#b9b3c4"></i></span></span>
+          <span class="wc-meter" style="display:block"><span class="wc-row2"><span>Design B</span><b>62%</b></span><span class="track" style="display:block"><i data-w="62%" style="background:#5e21e6"></i></span></span>
+        </span>
+      </button>
+      <button class="xf-cell" role="listitem" aria-selected="false">
+        <span class="xf-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="8.5"/><g class="pl"><path d="M10 8.8v6.4L15 12z" fill="#1c1c1c" stroke="none"/></g></svg></span>
+        <b>Session recording and clips</b>
+        <p>Record real website sessions, replay them with an event timeline, and export the key moments as clips</p>
+      </button>
+      <button class="xf-cell" role="listitem" aria-selected="false">
+        <span class="xf-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 10h16M12 10v9"/><rect class="gc" x="6" y="12" width="4" height="5" fill="#1c1c1c" stroke="none"/><rect class="gc gc2" x="14" y="12" width="4" height="5" fill="#1c1c1c" stroke="none"/></svg></span>
+        <b>Cross-tab with significance</b>
+        <p>Cross-tabulate any two questions with automatic chi-square or Fisher's exact testing</p>
+      </button>
+    </div>
+  </section>
+
+  <div class="rules" aria-hidden="true"></div>
+
+  <section class="price" id="billing">
+    <span class="pick-pill"><i></i>PRICING</span>
+    <h2 class="sec-title">Simple pricing. No per-response fees.</h2>
+    <div class="bill">
+      <span id="lblM" class="on">Monthly</span>
+      <button class="sw" id="sw" role="switch" aria-checked="false" aria-label="Yearly billing"><i></i></button>
+      <span id="lblY">Yearly</span>
+    </div>
+    <div class="price-grid">
+      <div class="plan">
+        <div class="plan-name">Starter<span class="early">FREE EARLY ACCESS</span></div>
+        <div class="plan-desc">For individuals starting their research practice.</div>
+        <div class="amount"><span class="cur">$</span><span class="num">0</span></div>
+        <div class="note">free during early access, no card</div>
+        <button class="plan-btn">Start free <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+        <ul class="plan-list">
+          <li><svg viewBox="0 0 16 16"><rect width="16" height="16" rx="4" fill="#23232a"/><path d="M4.8 8.4l2.3 2.3 4.2-5" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>6 available study types</li>
+          <li><svg viewBox="0 0 16 16"><rect width="16" height="16" rx="4" fill="#23232a"/><path d="M4.8 8.4l2.3 2.3 4.2-5" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Figma Prototype Test coming soon</li>
+          <li><svg viewBox="0 0 16 16"><rect width="16" height="16" rx="4" fill="#23232a"/><path d="M4.8 8.4l2.3 2.3 4.2-5" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Custom branding (logo &amp; colors)</li>
+          <li><svg viewBox="0 0 16 16"><rect width="16" height="16" rx="4" fill="#23232a"/><path d="M4.8 8.4l2.3 2.3 4.2-5" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>50 responses per study</li>
+          <li><svg viewBox="0 0 16 16"><rect width="16" height="16" rx="4" fill="#23232a"/><path d="M4.8 8.4l2.3 2.3 4.2-5" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>5 active studies</li>
+          <li><svg viewBox="0 0 16 16"><rect width="16" height="16" rx="4" fill="#23232a"/><path d="M4.8 8.4l2.3 2.3 4.2-5" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>1 user</li>
+        </ul>
+      </div>
+      <div class="plan pro">
+        <div class="plan-name">Pro</div>
+        <div class="plan-desc">For the PM, designer, or researcher going deeper.</div>
+        <div class="amount"><span class="cur">$</span><span class="num" data-m="39" data-y="29">39</span><span class="per">/mo</span></div>
+        <div class="note" data-m="billed monthly, cancel anytime" data-y="billed annually">billed monthly, cancel anytime</div>
+        <button class="plan-btn light">Subscribe <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+        <ul class="plan-list">
+          <li><svg viewBox="0 0 16 16"><rect width="16" height="16" rx="4" fill="#23232a"/><path d="M4.8 8.4l2.3 2.3 4.2-5" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Everything in Starter, plus:</li>
+          <li><svg viewBox="0 0 16 16"><rect width="16" height="16" rx="4" fill="#23232a"/><path d="M4.8 8.4l2.3 2.3 4.2-5" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>100 responses per study</li>
+          <li><svg viewBox="0 0 16 16"><rect width="16" height="16" rx="4" fill="#23232a"/><path d="M4.8 8.4l2.3 2.3 4.2-5" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Unlimited active studies</li>
+          <li><svg viewBox="0 0 16 16"><rect width="16" height="16" rx="4" fill="#23232a"/><path d="M4.8 8.4l2.3 2.3 4.2-5" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Session recordings &amp; clips</li>
+          <li><svg viewBox="0 0 16 16"><rect width="16" height="16" rx="4" fill="#23232a"/><path d="M4.8 8.4l2.3 2.3 4.2-5" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>AI analysis with your own key (BYOK)</li>
+        </ul>
+      </div>
+      <div class="plan">
+        <div class="plan-name">Team</div>
+        <div class="plan-desc">For a squad researching together.</div>
+        <div class="amount"><span class="cur">$</span><span class="num" data-m="89" data-y="69">89</span><span class="per">/mo</span></div>
+        <div class="note" data-m="billed monthly, cancel anytime" data-y="billed annually">billed monthly, cancel anytime</div>
+        <button class="plan-btn">Subscribe <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+        <ul class="plan-list">
+          <li><svg viewBox="0 0 16 16"><rect width="16" height="16" rx="4" fill="#23232a"/><path d="M4.8 8.4l2.3 2.3 4.2-5" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Everything in Pro, plus:</li>
+          <li><svg viewBox="0 0 16 16"><rect width="16" height="16" rx="4" fill="#23232a"/><path d="M4.8 8.4l2.3 2.3 4.2-5" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>3 team members included (+$39/seat)</li>
+          <li><svg viewBox="0 0 16 16"><rect width="16" height="16" rx="4" fill="#23232a"/><path d="M4.8 8.4l2.3 2.3 4.2-5" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Real-time collaboration &amp; shared repository</li>
+          <li><svg viewBox="0 0 16 16"><rect width="16" height="16" rx="4" fill="#23232a"/><path d="M4.8 8.4l2.3 2.3 4.2-5" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Roles, permissions &amp; comments</li>
+          <li><svg viewBox="0 0 16 16"><rect width="16" height="16" rx="4" fill="#23232a"/><path d="M4.8 8.4l2.3 2.3 4.2-5" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Priority support</li>
+        </ul>
+      </div>
+    </div>
+    <div class="compare"><a href="#">Compare all plans &amp; features <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a></div>
+    <div class="you" id="youCursor2" aria-hidden="true">
+      <svg viewBox="0 0 26 26"><path d="M5 2.5 21.5 13l-8.3 1.6-2.6 8L5 2.5z" fill="#f96a1b" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+      <em>you</em>
+    </div>
+  </section>
+
+  <div class="rules" aria-hidden="true"></div>
+
+  <section class="ctaban" id="ctax">
+    <div class="cta-panel">
+      <h2>Go from Question to Insight in Hours, Not Weeks</h2>
+      <p>Start free during early access. No credit card required<br>and no per-response fees. Figma Prototype Test is<br>coming soon.</p>
+      <button class="cta-btn">Create Free Account <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+    </div>
+  </section>
+</div>
+<footer class="foot" id="foot">
+  <div class="foot-in">
+    <div>
+      <div class="flogo"><span class="v">V</span>eritio</div>
+      <p class="ftag">Veritio is designed to revolutionize how businesses operate.</p>
+    </div>
+    <div class="fcol">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Pricing</a></li>
+        <li><a href="#">Open Source</a></li>
+        <li><a href="#">Self-hosting</a></li>
+        <li><a href="#">For Education</a></li>
+        <li><a href="#">Participant demos</a></li>
+        <li><a href="#">MCP Server</a></li>
+        <li><a href="#">GitHub</a></li>
+        <li><a href="#">API Docs</a></li>
+      </ul>
+    </div>
+    <div class="fcol">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms &amp; Conditions</a></li>
+        <li><a href="#">Accessibility</a></li>
+        <li><a href="#">Security</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="fbase">© 2026 Veritio. All rights reserved</div>
+</footer>
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function attach(zoneId, curId){
+    var zone = document.getElementById(zoneId);
+    var cur = document.getElementById(curId);
+    if(!zone || !cur){ return; }
+    var tx = 0, ty = 0, x = 0, y = 0, raf = null;
+    function loop(){
+      x += (tx - x) * 0.35;
+      y += (ty - y) * 0.35;
+      cur.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+      if(Math.abs(tx - x) > 0.1 || Math.abs(ty - y) > 0.1){ raf = requestAnimationFrame(loop); }
+      else { raf = null; }
+    }
+    zone.addEventListener('mouseenter', function(){ cur.classList.add('show'); });
+    zone.addEventListener('mousemove', function(e){
+      var r = zone.getBoundingClientRect();
+      tx = e.clientX - r.left + 2;
+      ty = e.clientY - r.top - 2;
+      if(reduce){ x = tx; y = ty; cur.style.transform = 'translate(' + x + 'px,' + y + 'px)'; }
+      else if(!raf){ raf = requestAnimationFrame(loop); }
+    });
+    zone.addEventListener('mouseleave', function(){ cur.classList.remove('show'); if(raf){ cancelAnimationFrame(raf); raf = null; } });
+  }
+  attach('demo', 'youCursor');
+  attach('billing', 'youCursor2');
+})();
+(function(){
+  var sec = document.getElementById('billing');
+  if(!sec){ return; }
+  var sw = document.getElementById('sw');
+  var lblM = document.getElementById('lblM');
+  var lblY = document.getElementById('lblY');
+  var yearly = false;
+  function swap(el, v){
+    el.classList.remove('pop');
+    void el.offsetWidth;
+    el.textContent = v;
+    el.classList.add('pop');
+  }
+  function setMode(y){
+    yearly = y;
+    sec.classList.toggle('yearly', y);
+    sw.setAttribute('aria-checked', y ? 'true' : 'false');
+    lblM.classList.toggle('on', !y);
+    lblY.classList.toggle('on', y);
+    var fields = sec.querySelectorAll('[data-m]');
+    fields.forEach(function(el){
+      swap(el, y ? el.getAttribute('data-y') : el.getAttribute('data-m'));
+    });
+  }
+  sw.addEventListener('click', function(){ setMode(!yearly); });
+  lblM.addEventListener('click', function(){ setMode(false); });
+  lblY.addEventListener('click', function(){ setMode(true); });
+})();
+(function(){
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab[data-screen]'));
+  var screens = {
+    webapp: document.getElementById('screen-webapp'),
+    proto: document.getElementById('screen-proto'),
+    survey: document.getElementById('screen-survey'),
+    cardsort: document.getElementById('screen-cardsort'),
+    treetest: document.getElementById('screen-treetest'),
+    firstclick: document.getElementById('screen-firstclick'),
+    impression: document.getElementById('screen-impression')
+  };
+  function show(name){
+    tabs.forEach(function(t){
+      var on = t.getAttribute('data-screen') === name;
+      t.classList.toggle('active', on);
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    Object.keys(screens).forEach(function(k){
+      var s = screens[k], on = k === name;
+      s.classList.toggle('on', on);
+      if(on){ s.removeAttribute('hidden'); } else { s.setAttribute('hidden', ''); }
+    });
+    if(name === 'proto'){ resetRec(); }
+  }
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){ show(t.getAttribute('data-screen')); });
+  });
+  /* live REC timer on the prototype phone (starts at 0:32 like the recording) */
+  var recEl = document.getElementById('recTime');
+  var secs = 32, timer = null;
+  function fmt(s){ return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); }
+  function resetRec(){
+    secs = 32;
+    if(recEl){ recEl.textContent = fmt(secs); }
+    if(timer){ return; }
+    timer = setInterval(function(){
+      secs++;
+      if(recEl){ recEl.textContent = fmt(secs); }
+    }, 1000);
+  }
+  resetRec();
+  /* tree-test timer (starts at 0:07 like the design) */
+  var treeEl = document.getElementById('treeTime'), tsecs = 7;
+  function tfmt(s){ return '0:' + ('0' + s).slice(-2); }
+  setInterval(function(){ tsecs++; if(treeEl){ treeEl.textContent = tfmt(tsecs); } }, 1000);
+  /* survey single-choice select */
+  var opts = Array.prototype.slice.call(document.querySelectorAll('#screen-survey .opt'));
+  opts.forEach(function(o){
+    o.addEventListener('click', function(){
+      opts.forEach(function(x){ x.classList.remove('sel'); });
+      o.classList.add('sel');
+    });
+  });
+  /* card-sort drag and drop with live progress */
+  var tray = document.getElementById('tray');
+  var dragEl = null;
+  function refreshSort(){
+    var inCols = document.querySelectorAll('#screen-cardsort .col .chip').length;
+    var total = document.querySelectorAll('#screen-cardsort .chip').length;
+    var left = total - inCols;
+    document.getElementById('unsortedCount').textContent = left;
+    document.getElementById('sortedCount').textContent = inCols + ' of ' + total + ' sorted';
+    document.getElementById('sortFill').style.width = (total ? (inCols / total * 100) : 0) + '%';
+    document.querySelectorAll('#screen-cardsort .col').forEach(function(c){
+      var hint = c.querySelector('.drop-hint');
+      if(hint){ hint.style.display = c.querySelector('.chip') ? 'none' : ''; }
+    });
+  }
+  document.querySelectorAll('#screen-cardsort .chip').forEach(function(ch){
+    ch.addEventListener('dragstart', function(){ dragEl = ch; ch.classList.add('dragging'); });
+    ch.addEventListener('dragend', function(){ ch.classList.remove('dragging'); dragEl = null; refreshSort(); });
+  });
+  function dropZone(el){
+    el.addEventListener('dragover', function(e){ e.preventDefault(); el.classList.add('over'); });
+    el.addEventListener('dragleave', function(){ el.classList.remove('over'); });
+    el.addEventListener('drop', function(e){
+      e.preventDefault(); el.classList.remove('over');
+      var dest = el.classList.contains('chips') ? el : el.querySelector('.chips');
+      if(dragEl && dest){ dest.appendChild(dragEl); refreshSort(); }
+    });
+  }
+  document.querySelectorAll('#screen-cardsort .col').forEach(dropZone);
+  dropZone(tray);
+  refreshSort();
+})();
+(function(){
+  var stmt = document.getElementById('stmt');
+  if(!stmt){ return; }
+  var words = stmt.querySelectorAll('span');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce){ stmt.classList.remove('armed'); return; }
+  stmt.classList.add('armed');
+  var ticking = false;
+  function paint(){
+    ticking = false;
+    var r = stmt.getBoundingClientRect();
+    var vh = window.innerHeight || 800;
+    var p = (vh * 0.85 - r.top) / (vh * 0.6);
+    if(p < 0){ p = 0; } if(p > 1){ p = 1; }
+    var n = Math.round(p * words.length);
+    for(var i = 0; i < words.length; i++){
+      words[i].classList.toggle('lit', i < n);
+    }
+  }
+  function onScroll(){
+    if(!ticking){ ticking = true; requestAnimationFrame(paint); }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  paint();
+})();
+(function(){
+  var D = 6000;
+  var cards = [
+    '<div class="wc-sub">Visited by 22 of 22 participants</div>'
+    + '<div class="wc-title">Login screen</div>'
+    + '<div class="wc-box hot"><div><b>Hits</b><span>90% of clicks</span></div><em>28</em></div>'
+    + '<div class="wc-box"><div><b>Misses</b><span>10% of clicks</span></div><em>4</em></div>'
+    + '<div class="wc-box"><div><b>Time spent</b><span>Average time on screen</span></div><em>10s</em></div>',
+    '<div class="wc-row"><div class="wc-title">Pricing page test</div><span class="pill-green">Winner: B \u00B7 95%</span></div>'
+    + '<div class="wc-meter"><div class="wc-row2"><span>Design A</span><b>38%</b></div><div class="track"><i data-w="38%" style="background:#b9b3c4"></i></div></div>'
+    + '<div class="wc-meter"><div class="wc-row2"><span>Design B</span><b>62%</b></div><div class="track"><i data-w="62%" style="background:#5e21e6"></i></div></div>',
+    '<div class="wc-row"><div class="wc-title">Top themes</div><span class="pill-ai">\u25CF AI summary</span></div>'
+    + '<div class="wc-meter"><div class="wc-row2"><span>Confusing navigation</span><b>24</b></div><div class="track"><i data-w="88%" style="background:#f0562b"></i></div></div>'
+    + '<div class="wc-meter"><div class="wc-row2"><span>Pricing felt unclear</span><b>18</b></div><div class="track"><i data-w="64%" style="background:#f5a800"></i></div></div>'
+    + '<div class="wc-meter"><div class="wc-row2"><span>Loved the speed</span><b>15</b></div><div class="track"><i data-w="52%" style="background:#22b07d"></i></div></div>',
+    '<div class="wc-sub">Question 2 of 5</div>'
+    + '<div class="wc-title">How often do you use our app?</div>'
+    + '<div class="wc-pol"><span>Every day</span><div class="track"><i data-w="36%" style="background:#22b07d"></i></div></div>'
+    + '<div class="wc-pol"><span class="strong">Weekly</span><div class="track"><i data-w="76%" style="background:#22b07d"></i></div></div>'
+    + '<div class="wc-pol"><span>Monthly</span><div class="track"><i data-w="46%" style="background:#22b07d"></i></div></div>'
+    + '<div class="wc-pol"><span>Never</span><div class="track"><i data-w="22%" style="background:#22b07d"></i></div></div>',
+    '<div class="ring"><svg viewBox="0 0 124 124"><circle cx="62" cy="62" r="52" fill="none" stroke="#e9f4ec" stroke-width="11"/>'
+    + '<circle cx="62" cy="62" r="52" fill="none" stroke="#22b07d" stroke-width="11" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="56.2"/></svg>'
+    + '<div><b>48</b><span>of 58</span></div></div>'
+    + '<div class="wc-center">Participants completed your study</div>'
+    + '<div class="wc-center"><span class="pill-green">Results in 4 hours</span></div>'
+  ];
+  var who = document.getElementById('who');
+  var card = document.getElementById('whoCard');
+  var roles = Array.prototype.slice.call(document.querySelectorAll('#who .role'));
+  if(!who || !card || !roles.length){ return; }
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var idx = 0, timer = null, visible = true;
+  function bars(){
+    var fills = card.querySelectorAll('.track i[data-w]');
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        fills.forEach(function(f){ f.style.width = f.getAttribute('data-w'); });
+      });
+    });
+  }
+  function runBar(){
+    var bar = roles[idx].querySelector('.timer i');
+    bar.style.transition = 'none'; bar.style.width = '0';
+    void bar.offsetWidth;
+    bar.style.transition = 'width ' + D + 'ms linear';
+    bar.style.width = '100%';
+  }
+  function show(i){
+    idx = (i + roles.length) % roles.length;
+    roles.forEach(function(r, k){
+      var on = k === idx;
+      r.classList.toggle('on', on);
+      r.querySelector('.role-name').setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    card.classList.remove('swap'); void card.offsetWidth;
+    card.innerHTML = cards[idx];
+    card.classList.add('swap');
+    bars();
+    restart();
+  }
+  function restart(){
+    if(timer){ clearTimeout(timer); timer = null; }
+    if(reduce || !visible){ return; }
+    runBar();
+    timer = setTimeout(function(){ show(idx + 1); }, D);
+  }
+  roles.forEach(function(r, k){
+    r.querySelector('.role-name').addEventListener('click', function(){ show(k); });
+  });
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){
+      visible = es[0].isIntersecting;
+      restart();
+    }, { threshold: 0.15 }).observe(who);
+  }
+  bars();
+  restart();
+})();
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function count(el){
+    var target = parseFloat(el.getAttribute('data-count'));
+    var dec = parseInt(el.getAttribute('data-dec') || '0', 10);
+    var suf = el.getAttribute('data-suffix') || '';
+    if(reduce){ el.textContent = target.toFixed(dec) + suf; return; }
+    var t0 = null, T = 1400;
+    function step(t){
+      if(!t0){ t0 = t; }
+      var p = Math.min((t - t0) / T, 1);
+      var e = 1 - Math.pow(1 - p, 3);
+      el.textContent = (target * e).toFixed(dec) + suf;
+      if(p < 1){ requestAnimationFrame(step); }
+    }
+    requestAnimationFrame(step);
+  }
+  function fire(card){
+    card.classList.add('in');
+    card.querySelectorAll('[data-count]').forEach(count);
+    card.querySelectorAll('.track i[data-w]').forEach(function(f){
+      f.style.width = f.getAttribute('data-w');
+    });
+  }
+  var cards = document.querySelectorAll('[data-reveal]');
+  if(reduce || !('IntersectionObserver' in window)){ cards.forEach(fire); return; }
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){ fire(e.target); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.3 });
+  cards.forEach(function(c){ io.observe(c); });
+})();
+(function(){
+  var D = 4000;
+  var cells = Array.prototype.slice.call(document.querySelectorAll('#xf .xf-cell'));
+  if(!cells.length){ return; }
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var idx = 0, timer = null, visible = true;
+  function paint(i){
+    idx = (i + cells.length) % cells.length;
+    cells.forEach(function(c, k){
+      var on = k === idx;
+      c.classList.toggle('on', on);
+      c.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    var bars = cells[idx].querySelectorAll('.track i[data-w]');
+    if(bars.length){
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          bars.forEach(function(f){ f.style.width = f.getAttribute('data-w'); });
+        });
+      });
+    }
+    restart();
+  }
+  function restart(){
+    if(timer){ clearTimeout(timer); timer = null; }
+    if(reduce || !visible){ return; }
+    timer = setTimeout(function(){ paint(idx + 1); }, D);
+  }
+  cells.forEach(function(c, k){
+    c.addEventListener('click', function(){ paint(k); });
+  });
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){
+      visible = es[0].isIntersecting;
+      restart();
+    }, { threshold: 0.1 }).observe(document.getElementById('xf'));
+  }
+  paint(0);
+})();</script>
+</body>
+</html>
